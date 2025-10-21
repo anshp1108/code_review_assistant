@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}Review Results - Code Review Assistant{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="results-header">
+        <h1><i class="fas fa-clipboard-check"></i> Code Review Results</h1>
+        <div class="file-info-header">
+            <span class="file-name"><i class="fas fa-file-code"></i> {{ report.filename }}</span>
+            <span class="timestamp">{{ report.timestamp }}</span>
+        </div>
+    </div>
+
+    <div class="results-grid">
+        <!-- Overview Section -->
+        <div class="result-card overview-card">
+            <h2><i class="fas fa-chart-pie"></i> Overview</h2>
+            <div class="overview-stats">
+                <div class="stat">
+                    <span class="stat-value">{{ report.analysis.basic_metrics.total_lines }}</span>
+                    <span class="stat-label">Total Lines</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ report.analysis.basic_metrics.code_lines }}</span>
+                    <span class="stat-label">Code Lines</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ "%.1f"|format(report.analysis.basic_metrics.comment_ratio * 100) }}%</span>
+                    <span class="stat-label">Comments</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ report.analysis.language_specific.function_count or 0 }}</span>
+                    <span class="stat-label">Functions</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Review Section -->
+        <div class="result-card ai-review-card">
+            <h2><i class="fas fa-robot"></i> AI Analysis</h2>
+            {% if report.llm_review.error %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>{{ report.llm_review.error }}</p>
+                    {% if report.llm_review.fallback_review %}
+                        <div class="fallback-review">
+                            <h4>Basic Analysis:</h4>
+                            <p>{{ report.llm_review.fallback_review.review_text }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="review-content">
+                    <div class="review-text">
+                        {{ report.llm_review.review_text|replace('\n', '<br>')|safe }}
+                    </div>
+
+                    {% if report.llm_review.severity_levels %}
+                    <div class="severity-indicators">
+                        <div class="severity high">
+                            <span class="severity-count">{{ report.llm_review.severity_levels.high }}</span>
+                            <span class="severity-label">Critical Issues</span>
+                        </div>
+                        <div class="severity medium">
+                            <span class="severity-count">{{ report.llm_review.severity_levels.medium }}</span>
+                            <span class="severity-label">Improvements</span>
+                        </div>
+                        <div class="severity low">
+                            <span class="severity-count">{{ report.llm_review.severity_levels.low }}</span>
+                            <span class="severity-label">Minor Issues</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Code Metrics Section -->
+        <div class="result-card metrics-card">
+            <h2><i class="fas fa-chart-bar"></i> Code Metrics</h2>
+            <div class="metrics-list">
+                <div class="metric-item">
+                    <span class="metric-label">Language:</span>
+                    <span class="metric-value">{{ report.analysis.language }}</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Average Line Length:</span>
+                    <span class="metric-value">{{ report.analysis.basic_metrics.average_line_length }} chars</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Blank Lines:</span>
+                    <span class="metric-value">{{ report.analysis.basic_metrics.blank_lines }}</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Comment Lines:</span>
+                    <span class="metric-value">{{ report.analysis.basic_metrics.comment_lines }}</span>
+                </div>
+                {% if report.analysis.basic_metrics.long_lines %}
+                <div class="metric-item warning">
+                    <span class="metric-label">Long Lines (>80 chars):</span>
+                    <span class="metric-value">{{ report.analysis.basic_metrics.long_lines|length }} lines</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Suggestions Section -->
+        {% if report.llm_review.suggestions %}
+        <div class="result-card suggestions-card">
+            <h2><i class="fas fa-lightbulb"></i> Key Suggestions</h2>
+            <ul class="suggestions-list">
+                {% for suggestion in report.llm_review.suggestions %}
+                <li class="suggestion-item">
+                    <i class="fas fa-arrow-right"></i>
+                    {{ suggestion }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Language Specific Analysis -->
+        {% if report.analysis.language_specific %}
+        <div class="result-card language-card">
+            <h2><i class="fas fa-code"></i> Language Analysis</h2>
+            <div class="language-details">
+                {% if report.analysis.language_specific.functions %}
+                    <h4>Functions Found:</h4>
+                    <ul class="code-elements">
+                        {% for func in report.analysis.language_specific.functions[:10] %}
+                            <li>{{ func.name if func.name else func }} 
+                                {% if func.line %}<span class="line-number">(line {{ func.line }})</span>{% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if report.analysis.language_specific.classes %}
+                    <h4>Classes Found:</h4>
+                    <ul class="code-elements">
+                        {% for cls in report.analysis.language_specific.classes[:10] %}
+                            <li>{{ cls.name if cls.name else cls }}
+                                {% if cls.line %}<span class="line-number">(line {{ cls.line }})</span>{% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if report.analysis.language_specific.imports %}
+                    <h4>Imports/Dependencies:</h4>
+                    <ul class="code-elements">
+                        {% for imp in report.analysis.language_specific.imports[:10] %}
+                            <li>{{ imp.name if imp.name else imp }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if report.analysis.language_specific.potential_issues %}
+                    <h4>Potential Issues:</h4>
+                    <ul class="issues-list">
+                        {% for issue in report.analysis.language_specific.potential_issues %}
+                            <li class="issue-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ issue }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('upload_file') }}" class="btn btn-primary">
+            <i class="fas fa-upload"></i> Review Another File
+        </a>
+        <button onclick="downloadReport()" class="btn btn-secondary">
+            <i class="fas fa-download"></i> Download Report
+        </button>
+        <button onclick="shareReport()" class="btn btn-outline">
+            <i class="fas fa-share-alt"></i> Share Results
+        </button>
+    </div>
+</div>
+
+<script>
+const reportData = {{ report|tojson }};
+
+function downloadReport() {
+    const blob = new Blob([JSON.stringify(reportData, null, 2)], {
+        type: 'application/json'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `code_review_${reportData.filename}_${reportData.timestamp}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function shareReport() {
+    if (navigator.share) {
+        navigator.share({
+            title: `Code Review: ${reportData.filename}`,
+            text: `AI Code Review results for ${reportData.filename}`,
+            url: window.location.href
+        });
+    } else {
+        // Fallback - copy URL to clipboard
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Report URL copied to clipboard!');
+        });
+    }
+}
+</script>
+{% endblock %}

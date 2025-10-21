@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Code - Code Review Assistant{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="upload-section">
+        <h1><i class="fas fa-upload"></i> Upload Code for Review</h1>
+        <p class="section-subtitle">
+            Select your source code file to get comprehensive AI-powered analysis and recommendations.
+        </p>
+
+        <div class="upload-container">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="file-upload-area" id="dropZone">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h3>Drop your code file here</h3>
+                        <p>or</p>
+                        <label for="fileInput" class="btn btn-secondary">
+                            <i class="fas fa-file-code"></i> Choose File
+                        </label>
+                        <input type="file" id="fileInput" name="file" accept=".py,.js,.java,.cpp,.c,.cs,.php,.rb,.go,.rs,.swift,.kt,.scala,.ts,.jsx,.tsx,.vue,.html,.css" style="display: none;">
+                    </div>
+                    <div class="file-info" id="fileInfo" style="display: none;">
+                        <i class="fas fa-file-code"></i>
+                        <span id="fileName"></span>
+                        <button type="button" id="removeFile" class="btn-remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="upload-options">
+                    <h3>Review Options</h3>
+                    <div class="options-grid">
+                        <label class="option-item">
+                            <input type="checkbox" name="checkSecurity" checked>
+                            <span class="checkmark"></span>
+                            <span class="option-label">Security Analysis</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="checkPerformance" checked>
+                            <span class="checkmark"></span>
+                            <span class="option-label">Performance Review</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="checkBestPractices" checked>
+                            <span class="checkmark"></span>
+                            <span class="option-label">Best Practices</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" name="checkDocumentation">
+                            <span class="checkmark"></span>
+                            <span class="option-label">Documentation Review</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                    <i class="fas fa-cogs"></i> Start Analysis
+                </button>
+            </form>
+        </div>
+
+        <div id="loadingSection" class="loading-section" style="display: none;">
+            <div class="loading-spinner"></div>
+            <h3>Analyzing Your Code...</h3>
+            <p>Our AI is reviewing your code for quality, security, and best practices.</p>
+            <div class="progress-steps">
+                <div class="progress-step active">
+                    <i class="fas fa-upload"></i>
+                    <span>File Uploaded</span>
+                </div>
+                <div class="progress-step">
+                    <i class="fas fa-search"></i>
+                    <span>Code Analysis</span>
+                </div>
+                <div class="progress-step">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Review</span>
+                </div>
+                <div class="progress-step">
+                    <i class="fas fa-check"></i>
+                    <span>Complete</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="errorSection" class="error-section" style="display: none;">
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Upload Error</h3>
+                <p id="errorMessage"></p>
+                <button type="button" id="retryBtn" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="file-guidelines">
+        <h3><i class="fas fa-info-circle"></i> File Guidelines</h3>
+        <div class="guidelines-grid">
+            <div class="guideline">
+                <strong>Supported Formats:</strong>
+                <p>Python, JavaScript, Java, C++, C, C#, PHP, Ruby, Go, Rust, Swift, TypeScript, and more</p>
+            </div>
+            <div class="guideline">
+                <strong>File Size:</strong>
+                <p>Maximum 16MB per file for optimal processing speed</p>
+            </div>
+            <div class="guideline">
+                <strong>Code Quality:</strong>
+                <p>Clean, well-structured code gets the most valuable feedback</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

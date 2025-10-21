@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Code Review Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__brand">
+                <h2>🔍 CodeReview AI</h2>
+            </div>
+            <div class="nav__links">
+                <a href="#home" class="nav__link">Home</a>
+                <a href="#features" class="nav__link">Features</a>
+                <a href="#demo" class="nav__link">Demo</a>
+                <button class="btn btn--primary" onclick="showDemo()">Try Demo</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Landing Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero__content">
+                <div class="hero__text">
+                    <h1 class="hero__title">AI-Powered Code Review Assistant</h1>
+                    <p class="hero__subtitle">Intelligent code analysis that helps developers write better, more secure, and performant code with AI-powered insights and recommendations.</p>
+                    <div class="hero__actions">
+                        <button class="btn btn--primary btn--lg" onclick="showDemo()">Start Code Review</button>
+                        <button class="btn btn--outline btn--lg" onclick="showFeatures()">Learn More</button>
+                    </div>
+                </div>
+                <div class="hero__visual">
+                    <div class="hero__image">
+                        <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/2bd1fdaf0d02304f64827de7e18c9052/d363db89-08b8-49bb-9a2b-5ac340758163/1abbe0a1.png" alt="Code Review Process Flow" class="flowchart-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="features__header">
+                <h2>Powerful Code Analysis Features</h2>
+                <p>Our AI assistant provides comprehensive code review capabilities</p>
+            </div>
+            <div class="features__grid">
+                <div class="feature-card">
+                    <div class="feature-card__icon">🔍</div>
+                    <h3>Smart Code Analysis</h3>
+                    <p>Advanced parsing and structure analysis with language-specific insights</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🤖</div>
+                    <h3>AI-Powered Reviews</h3>
+                    <p>Intelligent suggestions powered by state-of-the-art language models</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🛡️</div>
+                    <h3>Security Scanning</h3>
+                    <p>Identify potential vulnerabilities and security best practices</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">⚡</div>
+                    <h3>Performance Optimization</h3>
+                    <p>Suggestions for improving code efficiency and performance</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">✅</div>
+                    <h3>Best Practices</h3>
+                    <p>Ensure adherence to coding standards and industry best practices</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">📊</div>
+                    <h3>Detailed Reports</h3>
+                    <p>Comprehensive analysis with actionable insights and metrics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Languages -->
+    <section class="languages">
+        <div class="container">
+            <h3>Supported Languages</h3>
+            <div class="languages__list">
+                <div class="language-tag"><span class="language-icon">🐍</span> Python</div>
+                <div class="language-tag"><span class="language-icon">🟨</span> JavaScript</div>
+                <div class="language-tag"><span class="language-icon">☕</span> Java</div>
+                <div class="language-tag"><span class="language-icon">⚙️</span> C++</div>
+                <div class="language-tag"><span class="language-icon">🔷</span> TypeScript</div>
+                <div class="language-tag"><span class="language-icon">💎</span> Ruby</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo hidden">
+        <div class="container">
+            <div class="demo__header">
+                <h2>Try the Code Review Assistant</h2>
+                <p>Upload your code or select from our sample files to see AI-powered analysis in action</p>
+            </div>
+            
+            <div class="upload-section">
+                <div class="upload-options">
+                    <div class="upload-tab active" data-tab="upload">Upload File</div>
+                    <div class="upload-tab" data-tab="sample">Sample Code</div>
+                </div>
+                
+                <!-- File Upload -->
+                <div id="upload-panel" class="upload-panel active">
+                    <div class="file-drop-zone" id="dropZone">
+                        <div class="drop-zone__content">
+                            <div class="drop-zone__icon">📁</div>
+                            <h3>Drop your code file here</h3>
+                            <p>Or click to browse files</p>
+                            <input type="file" id="fileInput" accept=".py,.js,.java,.cpp,.ts,.rb" hidden>
+                            <button class="btn btn--secondary" onclick="document.getElementById('fileInput').click()">Choose File</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sample Code Selection -->
+                <div id="sample-panel" class="upload-panel">
+                    <div class="sample-grid">
+                        <div class="sample-card" data-language="python">
+                            <div class="sample-card__header">
+                                <span class="sample-icon">🐍</span>
+                                <div>
+                                    <h4>Python - Fibonacci</h4>
+                                    <span class="sample-type">fibonacci.py</span>
+                                </div>
+                            </div>
+                            <pre class="sample-code">def calculate_fibonacci(n):
+    if n &lt;= 1:
+        return n
+    else:
+        return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+
+# Usage
+for i in range(10):
+    print(calculate_fibonacci(i))</pre>
+                            <button class="btn btn--primary btn--sm" onclick="selectSample('python')">Analyze Code</button>
+                        </div>
+                        
+                        <div class="sample-card" data-language="javascript">
+                            <div class="sample-card__header">
+                                <span class="sample-icon">🟨</span>
+                                <div>
+                                    <h4>JavaScript - Email Validation</h4>
+                                    <span class="sample-type">email_validation.js</span>
+                                </div>
+                            </div>
+                            <pre class="sample-code">function validateEmail(email) {
+    var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+document.getElementById('submit').onclick = function() {
+    var email = document.getElementById('email').value;
+    if (!validateEmail(email)) {
+        alert('Invalid email!');
+    }
+}</pre>
+                            <button class="btn btn--primary btn--sm" onclick="selectSample('javascript')">Analyze Code</button>
+                        </div>
+                        
+                        <div class="sample-card" data-language="java">
+                            <div class="sample-card__header">
+                                <span class="sample-icon">☕</span>
+                                <div>
+                                    <h4>Java - Calculator</h4>
+                                    <span class="sample-type">Calculator.java</span>
+                                </div>
+                            </div>
+                            <pre class="sample-code">public class Calculator {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        System.out.println(calc.add(5, 3));
+    }
+    
+    public int add(int a, int b) {
+        return a + b;
+    }
+}</pre>
+                            <button class="btn btn--primary btn--sm" onclick="selectSample('java')">Analyze Code</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loading" class="loading-section hidden">
+                <div class="loading__content">
+                    <div class="loading__spinner"></div>
+                    <h3>Analyzing Code...</h3>
+                    <p id="loadingStatus">Parsing file structure...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results hidden">
+        <div class="container">
+            <div class="results__header">
+                <h2>Code Review Results</h2>
+                <div class="results__actions">
+                    <button class="btn btn--outline btn--sm" onclick="downloadReport()">📄 Download Report</button>
+                    <button class="btn btn--secondary btn--sm" onclick="shareResults()">🔗 Share Results</button>
+                    <button class="btn btn--primary btn--sm" onclick="showDemo()">🔄 Try Another File</button>
+                </div>
+            </div>
+            
+            <div class="results__content">
+                <!-- File Info -->
+                <div class="result-card">
+                    <h3>📁 File Information</h3>
+                    <div class="file-info">
+                        <div class="file-detail">
+                            <span class="label">Filename:</span>
+                            <span id="fileName">-</span>
+                        </div>
+                        <div class="file-detail">
+                            <span class="label">Language:</span>
+                            <span id="fileLanguage">-</span>
+                        </div>
+                        <div class="file-detail">
+                            <span class="label">Size:</span>
+                            <span id="fileSize">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Metrics -->
+                <div class="result-card">
+                    <h3>📊 Code Metrics</h3>
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <div class="metric__value" id="totalLines">0</div>
+                            <div class="metric__label">Total Lines</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric__value" id="codeLines">0</div>
+                            <div class="metric__label">Code Lines</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric__value" id="functions">0</div>
+                            <div class="metric__label">Functions</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric__value" id="complexity">Low</div>
+                            <div class="metric__label">Complexity</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Issues Summary -->
+                <div class="result-card">
+                    <h3>🔍 Issues Summary</h3>
+                    <div class="issues-summary">
+                        <div class="issue-count high">
+                            <span class="count" id="highIssues">0</span>
+                            <span class="severity">High</span>
+                        </div>
+                        <div class="issue-count medium">
+                            <span class="count" id="mediumIssues">0</span>
+                            <span class="severity">Medium</span>
+                        </div>
+                        <div class="issue-count low">
+                            <span class="count" id="lowIssues">0</span>
+                            <span class="severity">Low</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Review -->
+                <div class="result-card">
+                    <h3>🤖 AI-Generated Review</h3>
+                    <div class="review-content" id="reviewContent">
+                        <!-- Review content will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Suggestions -->
+                <div class="result-card">
+                    <h3>💡 Improvement Suggestions</h3>
+                    <div class="suggestions-list" id="suggestionsList">
+                        <!-- Suggestions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    <h3>🔍 CodeReview AI</h3>
+                    <p>Empowering developers with intelligent code analysis</p>
+                </div>
+                <div class="footer__links">
+                    <div class="footer__section">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#demo">Demo</a>
+                        <a href="#" target="_blank">Documentation</a>
+                    </div>
+                    <div class="footer__section">
+                        <h4>Support</h4>
+                        <a href="#" target="_blank">Help Center</a>
+                        <a href="#" target="_blank">Contact Us</a>
+                        <a href="#" target="_blank">API Reference</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2025 CodeReview AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

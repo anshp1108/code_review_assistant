@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Code Review Assistant{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="hero-section">
+        <h1><i class="fas fa-robot"></i> AI-Powered Code Review Assistant</h1>
+        <p class="hero-subtitle">
+            Automate your code reviews with intelligent analysis, best practices recommendations, 
+            and detailed feedback powered by advanced language models.
+        </p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3>Smart Analysis</h3>
+            <p>Comprehensive code structure analysis with language-specific insights and metrics.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>AI Recommendations</h3>
+            <p>Get intelligent suggestions for improving code quality, readability, and performance.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Security Review</h3>
+            <p>Identify potential security vulnerabilities and best practice violations.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3>Detailed Reports</h3>
+            <p>Receive comprehensive review reports with actionable insights and metrics.</p>
+        </div>
+    </div>
+
+    <div class="quick-start">
+        <h2>Get Started</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Upload Your Code</h3>
+                    <p>Select and upload your source code files for analysis</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>AI Analysis</h3>
+                    <p>Our AI analyzes your code for structure, quality, and best practices</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Review Results</h3>
+                    <p>Get detailed feedback and recommendations for improvement</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-button">
+            <a href="{{ url_for('upload_file') }}" class="btn btn-primary">
+                <i class="fas fa-upload"></i> Start Code Review
+            </a>
+        </div>
+    </div>
+
+    <div class="supported-languages">
+        <h3>Supported Languages</h3>
+        <div class="language-grid">
+            <span class="language-tag python"><i class="fab fa-python"></i> Python</span>
+            <span class="language-tag javascript"><i class="fab fa-js"></i> JavaScript</span>
+            <span class="language-tag java"><i class="fab fa-java"></i> Java</span>
+            <span class="language-tag cpp">C++</span>
+            <span class="language-tag c">C</span>
+            <span class="language-tag csharp">C#</span>
+            <span class="language-tag php"><i class="fab fa-php"></i> PHP</span>
+            <span class="language-tag ruby">Ruby</span>
+            <span class="language-tag go">Go</span>
+            <span class="language-tag rust">Rust</span>
+            <span class="language-tag swift"><i class="fab fa-swift"></i> Swift</span>
+            <span class="language-tag typescript">TypeScript</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
