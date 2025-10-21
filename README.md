@@ -5,7 +5,7 @@ An intelligent web application that automates code reviews by analyzing source c
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Flask](https://img.shields.io/badge/Flask-2.3+-green.svg)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5-orange.svg)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 
 ## 📋 Table of Contents
 - [Features](#features)
@@ -524,9 +524,7 @@ Contributions are welcome! Please follow these steps:
 - Add tests for new features
 - Update documentation as needed
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -535,11 +533,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Font Awesome](https://fontawesome.com) for icons
 - Community contributors and testers
 
-## 📧 Support
-
-For issues, questions, or suggestions:
-- Open an issue on GitHub
-- Contact: your.email@example.com
 
 ---
 
